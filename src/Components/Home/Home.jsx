@@ -1,11 +1,11 @@
 import React from "react";
+import Product from "../Product/Product";
 
 const Home = () => {
   return (
-    <div className="my-10">
-      <div className="text-center">
-        <h1>This is home component</h1>
-      </div>
+    <div className="my-10 text-center">
+      <h1>This is navbar</h1>
+      <Product />
     </div>
   );
 };

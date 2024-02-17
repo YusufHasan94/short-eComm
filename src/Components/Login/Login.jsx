@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
-const Login = () => {
-  const [username, setUserName] = useState("");
-  const [password, setPassword] = useState("");
+const Login = ({ setToken }) => {
+  const [username, setUserName] = useState("kminchelle");
+  const [password, setPassword] = useState("0lelplR");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,6 +24,7 @@ const Login = () => {
       });
 
       const data = await response.json();
+      setToken(data.token);
       console.log(data);
     } catch (err) {
       console.log(err);
@@ -49,6 +50,7 @@ const Login = () => {
                 className="p-1 rounded-md text-lg"
                 name="username"
                 id=""
+                value={username}
                 onChange={(e) => setUserName(e.target.value)}
               />
             </div>
@@ -61,6 +63,7 @@ const Login = () => {
                 className="p-1 rounded-md text-lg"
                 name="password"
                 id=""
+                value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
