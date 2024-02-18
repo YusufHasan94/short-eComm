@@ -25,7 +25,6 @@ const Login = ({ setToken }) => {
 
       const data = await response.json();
       setToken(data.token);
-      console.log(data);
     } catch (err) {
       console.log(err);
     }

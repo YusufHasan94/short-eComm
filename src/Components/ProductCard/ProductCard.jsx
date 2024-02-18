@@ -3,11 +3,16 @@ import "@smastrom/react-rating/style.css";
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ handleCart, product }) => {
   const disCountPrice =
     parseFloat(product?.price) -
     (parseFloat(product?.discountPercentage) / 100) *
       parseFloat(product?.price);
+
+  const handleCartProduct = () => {
+    handleCart(product);
+  };
+
   return (
     <div className="m-4 p-5 border bg-slate-100 rounded-lg">
       <div>
@@ -34,7 +39,10 @@ const ProductCard = ({ product }) => {
               View Details
             </NavLink>
           </button>
-          <button className="bg-blue-950 px-5 py-1 rounded-lg text-white">
+          <button
+            className="bg-blue-950 px-5 py-1 rounded-lg text-white"
+            onClick={handleCartProduct}
+          >
             Add to Cart
           </button>
         </div>
