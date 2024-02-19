@@ -13,3 +13,11 @@
     <li>Search & filter are available to simplify searching complexity.</li>
     <li>Can view product details</li>
 </ul>
+
+<h4>How to use locally</h4>
+<ul>
+    <li>First clone the project from provided repository</li>
+    <li>Run command "npm i" to install all dependencies</li>
+    <li>run command "npm run dev" to start project on local server</li>
+    <li>*** important must have to install node on the system.</li>
+</ul>
