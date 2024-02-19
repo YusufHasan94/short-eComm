@@ -7,7 +7,7 @@ function App() {
   const [token, setToken] = useState(null);
 
   return (
-    <div className="max-w-[1440px] my-0 mx-auto">
+    <div className="max-w-[1440px] my-0 mx-10 md:mx-auto">
       {token ? <Home token={token} /> : <Login setToken={setToken} />}
     </div>
   );

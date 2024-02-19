@@ -44,7 +44,7 @@ const Home = () => {
     setFilterProducts(filterWithPrice);
   };
 
-  const handleCart = (product) => {
+  const handleCart = (product, discountPrice) => {
     if (cartProducts.find((items) => items.id === product.id)) {
       Swal.fire({
         icon: "warning",
@@ -52,7 +52,10 @@ const Home = () => {
         text: "product already added in cart",
       });
     } else {
-      const newCartProducts = [...cartProducts, product];
+      const newCartProducts = [
+        ...cartProducts,
+        { ...product, quantity: 1, discountPrice: parseFloat(discountPrice) },
+      ];
       setCartProducts(newCartProducts);
       Swal.fire({
         icon: "success",
@@ -60,6 +63,29 @@ const Home = () => {
         text: "product added on cart successfully",
       });
     }
+  };
+
+  const incrementQuantity = (pId) => {
+    const updateProducts = cartProducts.map((product) =>
+      product.id == pId
+        ? { ...product, quantity: product.quantity + 1 }
+        : product
+    );
+    setCartProducts(updateProducts);
+  };
+  const decrementQuantity = (pId) => {
+    const updateProducts = cartProducts.map((product) =>
+      product.id == pId && product.quantity > 1
+        ? { ...product, quantity: product.quantity - 1 }
+        : product
+    );
+    setCartProducts(updateProducts);
+  };
+
+  const calculateTotalBill = () => {
+    return cartProducts.reduce((total, item) => {
+      return total + item.discountPrice * item.quantity;
+    }, 0);
   };
 
   const toggleCartOpen = () => {
@@ -84,17 +110,25 @@ const Home = () => {
               </div>
             )}
           </div>
-          <Cart cartProducts={cartProducts} cartOpen={cartOpen} />
+          <Cart
+            cartProducts={cartProducts}
+            cartOpen={cartOpen}
+            incrementQuantity={incrementQuantity}
+            decrementQuantity={decrementQuantity}
+            calculateTotalBill={calculateTotalBill}
+          />
         </div>
       </div>
-      <div className="flex gap-5 items-start">
-        <PriceFilter
-          maxPrice={maxPrice}
-          setMaxPrice={setMaxPrice}
-          minPrice={minPrice}
-          setMinPrice={setMinPrice}
-          handlePriceFilter={handlePriceFilter}
-        />
+      <div className="flex flex-col md:flex-row gap-5 items-start">
+        <div className="w-full md:w-fit flex justify-center">
+          <PriceFilter
+            maxPrice={maxPrice}
+            setMaxPrice={setMaxPrice}
+            minPrice={minPrice}
+            setMinPrice={setMinPrice}
+            handlePriceFilter={handlePriceFilter}
+          />
+        </div>
         <Product products={filterProducts} handleCart={handleCart} />
       </div>
     </div>

@@ -1,16 +1,26 @@
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState } from "react";
+import ProductDetails from "../ProductDetails/ProductDetails";
 
 const ProductCard = ({ handleCart, product }) => {
+  let [isOpen, setIsOpen] = useState(false);
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
   const disCountPrice =
     parseFloat(product?.price) -
     (parseFloat(product?.discountPercentage) / 100) *
       parseFloat(product?.price);
 
   const handleCartProduct = () => {
-    handleCart(product);
+    handleCart(product, disCountPrice);
   };
 
   return (
@@ -34,10 +44,12 @@ const ProductCard = ({ handleCart, product }) => {
           </div>
         </div>
         <div className="flex justify-end items-center text-lg gap-5 mt-4">
-          <button className="bg-slate-600 px-5 py-1 rounded-lg text-white">
-            <NavLink to={`/product-details/${product?.id}`}>
-              View Details
-            </NavLink>
+          <button
+            type="button"
+            onClick={openModal}
+            className="bg-slate-300 px-5 py-1 rounded-lg text-black"
+          >
+            View Details
           </button>
           <button
             className="bg-blue-950 px-5 py-1 rounded-lg text-white"
@@ -47,6 +59,15 @@ const ProductCard = ({ handleCart, product }) => {
           </button>
         </div>
       </div>
+      {isOpen ? (
+        <ProductDetails
+          isOpen={isOpen}
+          closeModal={closeModal}
+          product={product}
+        />
+      ) : (
+        ""
+      )}
     </div>
   );
 };

@@ -1,14 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 
-const CartCard = ({ product, index }) => {
-  const [quantity, setQuantity] = useState(1);
-
-  const totalPrice = (
-    parseInt(quantity) *
-    (parseFloat(product?.price) -
-      (parseFloat(product?.discountPercentage) / 100) *
-        parseFloat(product?.price))
-  ).toFixed(2);
+const CartCard = ({ product, index, incrementQuantity, decrementQuantity }) => {
+  // const totalPrice = (product.quantity * product?.discountPrice).toFixed(2);
 
   return (
     <div className="text-white mb-5">
@@ -24,19 +17,21 @@ const CartCard = ({ product, index }) => {
         </div>
         <div className="flex justify-center items-center gap-2 text-xl w-2/12">
           <button
-            onClick={() => setQuantity(quantity - 1)}
-            disabled={quantity == 1 ? true : false}
+            onClick={() => decrementQuantity(product.id)}
+            disabled={product.quantity == 1 ? true : false}
             className="text-2xl"
           >
             -
           </button>
           <h1 className="border size-8 bg-white text-black rounded-md">
-            {quantity}
+            {product.quantity}
           </h1>
-          <button onClick={() => setQuantity(quantity + 1)}>+</button>
+          <button onClick={() => incrementQuantity(product.id)}>+</button>
         </div>
         <div className="w-2/12 text-start">
-          <h1 className="text-xl">${totalPrice}</h1>
+          <h1 className="text-xl">
+            ${(product.discountPrice * product.quantity).toFixed(2)}
+          </h1>
         </div>
       </div>
     </div>

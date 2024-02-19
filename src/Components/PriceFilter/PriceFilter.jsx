@@ -12,7 +12,7 @@ const PriceFilter = ({
   };
 
   return (
-    <div className="flex flex-col items-end gap-5 mt-36">
+    <div className="flex flex-col justify-center items-end gap-5 lg:mt-36">
       <input
         type="number"
         name=""
