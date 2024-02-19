@@ -4,6 +4,8 @@ import Search from "../Search/Search";
 import PriceFilter from "../PriceFilter/PriceFilter";
 import Cart from "../Cart/Cart";
 import Swal from "sweetalert2";
+import { IoMdCloseCircleOutline } from "react-icons/io";
+import { FaShoppingCart } from "react-icons/fa";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -60,26 +62,30 @@ const Home = () => {
     }
   };
 
-  const toggleCartClose = () => {
-    setCartOpen(false);
-  };
-
   const toggleCartOpen = () => {
-    setCartOpen(true);
+    setCartOpen(!cartOpen);
   };
 
   return (
     <div className="my-10 text-center">
-      <div className="mb-10 flex justify-between items-center gap-5">
+      <div className="w-full mb-10 flex flex-col md:flex-row justify-between items-center gap-5 mx-5">
         <h1 className="text-4xl font-semibold">Short-eComm</h1>
         <Search setSearchItem={setSearchItem} />
-        <button onClick={toggleCartOpen}>
-          <Cart
-            cartProducts={cartProducts}
-            cartOpen={cartOpen}
-            toggleCartClose={toggleCartClose}
-          />
-        </button>
+        <div className="w-full md:w-fit flex justify-end">
+          <div onClick={toggleCartOpen} className="cursor-pointer">
+            {cartOpen ? (
+              <IoMdCloseCircleOutline className="text-4xl" />
+            ) : (
+              <div className="flex gap-1 text-2xl relative">
+                <FaShoppingCart className="text-4xl" />
+                <h1 className="absolute -top-6 right-0">
+                  {cartProducts.length}
+                </h1>
+              </div>
+            )}
+          </div>
+          <Cart cartProducts={cartProducts} cartOpen={cartOpen} />
+        </div>
       </div>
       <div className="flex gap-5 items-start">
         <PriceFilter
